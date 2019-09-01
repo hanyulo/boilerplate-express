@@ -58,11 +58,25 @@ app.get('/json', (req, res) => {
 //  place it before all the routes !
 
 
-
 /** 8) Chaining middleware. A Time server */
+
+const middlewareOne = (req, res, next) => {
+  req.time = new Date().toString();
+  next();
+}
+
+const finalHandler = (req, res, next) => {
+  const obj = { time: req.time };
+  res.json(obj);
+}
+
+const handlers = ['/now', middlewareOne, finalHandler];
+
+app.get.apply(app, handlers);
 
 
 /** 9)  Get input from client - Route parameters */
+
 
 
 /** 10) Get input from client - Query parameters */
