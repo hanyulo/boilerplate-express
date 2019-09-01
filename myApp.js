@@ -37,7 +37,7 @@ app.use(express.static(path.resolve(__dirname, './public')));
 
 app.get('/json', (req, res) => {
   console.log('process.env:' , process.env.MESSAGE_STYLE)
-  const obj = {"message": process.env.MESSAGE_STYLE === 'UPPERCASE' ? 'HELLO JSON' : "Hello json"};
+  const obj = {"message": process.env.MESSAGE_STYLE === 'uppercase' ? 'HELLO JSON' : "Hello json"};
   res.json(obj);
 });
 
