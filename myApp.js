@@ -4,6 +4,15 @@ var app = express();
 var path = require('path');
 require('dotenv').config();
 
+
+app.use((req, res, next) => {
+  const info = `${req.method} /${req.path} - ${req.ip}`;
+  console.log(info);
+  next();
+})
+
+app.use(express.static(path.resolve(__dirname, './public')));
+
 // --> 7)  Mount the Logger middleware here
 
 
@@ -30,22 +39,24 @@ app.get('/', (req, res) => {
 
 /** 4) Serve static assets  */
 
-app.use(express.static(path.resolve(__dirname, './public')));
+// done
 
 
 /** 5) serve JSON on a specific route */
 
 app.get('/json', (req, res) => {
-  console.log('process.env:' , process.env.MESSAGE_STYLE)
   const obj = {"message": process.env.MESSAGE_STYLE === 'uppercase' ? 'HELLO JSON' : "Hello json"};
   res.json(obj);
 });
 
 /** 6) Use the .env file to configure the app */
 
+// done
+
 
 /** 7) Root-level Middleware - A logger */
 //  place it before all the routes !
+
 
 
 /** 8) Chaining middleware. A Time server */
