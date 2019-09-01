@@ -2,6 +2,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+require('dotenv').config();
 
 // --> 7)  Mount the Logger middleware here
 
@@ -35,7 +36,8 @@ app.use(express.static(path.resolve(__dirname, './public')));
 /** 5) serve JSON on a specific route */
 
 app.get('/json', (req, res) => {
-  const obj = {"message": "Hello json"};
+  console.log('process.env:' , process.env.MESSAGE_STYLE)
+  const obj = {"message": process.env.MESSAGE_STYLE === 'UPPERCASE' ? 'HELLO JSON' : "Hello json"};
   res.json(obj);
 });
 
