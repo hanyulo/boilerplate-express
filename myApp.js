@@ -2,6 +2,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var bodyParser = require('body-parser')
 require('dotenv').config();
 
 
@@ -10,6 +11,9 @@ app.use((req, res, next) => {
   console.log(info);
   next();
 })
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+app.use(urlencodedParser);
 
 app.use(express.static(path.resolve(__dirname, './public')));
 
@@ -98,13 +102,21 @@ const handler = (req, res) => {
   res.json({ name: `${first} ${last}` });
 }
 
+const postHandler = (req, res) => {
+  const { body } = req;
+  const { first, last } = body;
+  res.json({ name: `${first} ${last}` });
+}
+
 app.route('/name')
   .get(handler)
-  .post(handler)
+  .post(postHandler)
 
 
 /** 11) Get ready for POST Requests - the `body-parser` */
 // place it before all the routes !
+
+// create application/x-www-form-urlencoded parser
 
 
 /** 12) Get data form POST  */
